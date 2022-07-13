@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFinder.Data", "GameFinder.Data\GameFinder.Data.csproj", "{502C3380-751B-4206-87D2-CCC561A6365A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFinder.Services", "GameFinder.Services\GameFinder.Services.csproj", "{DA6D1B22-84B8-4FA3-B5D5-85F1061CF6A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameFinder.WebAPI", "GameFinder.WebAPI\GameFinder.WebAPI.csproj", "{9B7BF8D6-27F3-480E-BA6E-58F7E9D0E7C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{502C3380-751B-4206-87D2-CCC561A6365A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{502C3380-751B-4206-87D2-CCC561A6365A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{502C3380-751B-4206-87D2-CCC561A6365A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{502C3380-751B-4206-87D2-CCC561A6365A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA6D1B22-84B8-4FA3-B5D5-85F1061CF6A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA6D1B22-84B8-4FA3-B5D5-85F1061CF6A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA6D1B22-84B8-4FA3-B5D5-85F1061CF6A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA6D1B22-84B8-4FA3-B5D5-85F1061CF6A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7BF8D6-27F3-480E-BA6E-58F7E9D0E7C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7BF8D6-27F3-480E-BA6E-58F7E9D0E7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7BF8D6-27F3-480E-BA6E-58F7E9D0E7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7BF8D6-27F3-480E-BA6E-58F7E9D0E7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
