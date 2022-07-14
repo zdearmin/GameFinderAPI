@@ -17,7 +17,6 @@ namespace GameFinder.Services.GameGenreService
         {
             var genreEntity = new GameGenre
             {
-                Id = request.Id,
                 Title = request.Title
             };
 
