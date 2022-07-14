@@ -1,7 +1,16 @@
+using GameFinder.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add connection strings and DbContext setup
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionNick");
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionMary");
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionZach");
 
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
