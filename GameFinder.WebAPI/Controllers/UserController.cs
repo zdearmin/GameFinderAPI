@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GameFinder.Services.User;
 using GameFinder.Data.Models;
-using GameFinder.Data.Models.User;
+//using GameFinder.Data.Models.User;
 
 
 namespace GameFinder.WebAPI.Controllers
@@ -19,7 +19,7 @@ namespace GameFinder.WebAPI.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserRegister model) {
+        public async Task<IActionResult> RegisterUser([FromBody] User model) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
