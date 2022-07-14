@@ -1,6 +1,6 @@
 // TODO Add/Update using statements
 using Microsoft.AspNetCore.Mvc;
-using GameFinder.Services.User;
+using GameFinder.Services.UserService;
 using GameFinder.Data.Models;
 //using GameFinder.Data.Models.User;
 
@@ -42,7 +42,7 @@ namespace GameFinder.WebAPI.Controllers
         // TODO Finish Patch to update User 
         [HttpPatch("{userId:int}")]
         public async Task<IActionResult> PatchUser([FromRoute] int userId, [FromBody] JsonPatchDocument userDocument) {
-            var updatedUser = await _service.UpdateUserPatchAsync(userId, userDocument);
+            var updatedUser = await _service.UpdateUserAsync(userId, userDocument);
             if (updatedUser is null) {
                 return NotFound();
             }

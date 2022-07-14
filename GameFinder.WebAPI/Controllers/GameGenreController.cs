@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using GameFinder.Services.GameGenreService;
 
 namespace GameFinder.WebAPI.Controllers
 {
@@ -24,7 +25,7 @@ namespace GameFinder.WebAPI.Controllers
         // TODO Finish Patch to update GameGenre
         [HttpPatch]
         public async Task<IActionResult> PatchGameGenre([FromRoute] int Id, [FromBody] JsonPatchDocument gameGenreDocument) {
-            var updatedGameGenre = await _service.UpdateGameGenrePatchAsync(Id, gameGenreDocument);
+            var updatedGameGenre = await _service.UpdateGenreAsync(Id, gameGenreDocument);
             if (updatedGameGenre is null) {
                 return NotFound();
             }
@@ -33,7 +34,7 @@ namespace GameFinder.WebAPI.Controllers
 
         [HttpDelete("{Id:int}")]
         public async Task<IActionResult> DeleteGameGenreAsync(int Id) {
-            var gameGenreToDelete = await _service.GetGameGenreByIdAsync(Id);
+            var gameGenreToDelete = await _service.GetAllGenresAsync();
             if (gameGenreToDelete is null) {
                 return NotFound();
             }

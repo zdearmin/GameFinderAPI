@@ -1,10 +1,10 @@
 // TODO Add using statements
 using Microsoft.EntityFrameworkCore;
 using GameFinder.Data;
-using GameFinder.Services.GameConsole;
-using GameFinder.Services.GameGenre;
-using GameFinder.Services.Game;
-using GameFinder.Services.User;
+using GameFinder.Services.UserService;
+using GameFinder.Services.GameService;
+using GameFinder.Services.GameGenreService;
+using GameFinder.Services.GameConsoleService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +16,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 // TODO Add Services for Dependency Injection
-builder.Services.AddScoped<IUser, User>();
-builder.Services.AddScoped<IGame, Game>();
-builder.Services.AddScoped<IGameGenre, GameGenre>();
-builder.Services.AddScoped<IGameConsole, GameConsole>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IGameGenreService, GameGenreService>();
+builder.Services.AddScoped<IGameConsoleService, GameConsoleService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
