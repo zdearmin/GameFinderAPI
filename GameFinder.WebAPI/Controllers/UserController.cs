@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GameFinder.Services.UserService;
 using GameFinder.Data.Models;
+using GameFinder.Data;
 //using GameFinder.Data.Models.User;
 
 
@@ -13,9 +14,11 @@ namespace GameFinder.WebAPI.Controllers
     {
         // TODO Check User Service for correct name once created
         private readonly IUserService _service;
-        
-        public UserController(IUserService service) {
+        private readonly AppDbContext _dbContext;
+
+        public UserController(IUserService service, AppDbContext dbContext) {
             _service = service;
+            _dbContext = dbContext;
         }
 
         [HttpPost("Register")]
@@ -39,11 +42,14 @@ namespace GameFinder.WebAPI.Controllers
             return Ok(userDetail);
         }
 
-        // TODO Finish Patch to update User 
-        [HttpPatch("{userId:int}")]
-        public async Task<IActionResult> PatchUser([FromRoute] int userId, [FromBody] JsonPatchDocument userDocument) {
-            var updatedUser = await _service.UpdateUserAsync(userId, userDocument);
-            if (updatedUser is null) {
+        // TODO Finish Put to update User 
+        [HttpPut("{userId:int}")]
+        public async Task<IActionResult> PatchUser([FromRoute] int id)
+        // [FromBody] JsonPatchDocument userDocument
+        {
+            var requestUser = await _dbContext.Users.FindAsync(id);
+            var updatedUser = await _service.UpdateUserAsync(requestUser);
+            if (updatedUser is false) {
                 return NotFound();
             }
             return Ok(updatedUser);

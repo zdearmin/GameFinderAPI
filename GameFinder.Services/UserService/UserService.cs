@@ -2,6 +2,7 @@ using GameFinder.Data;
 using GameFinder.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace GameFinder.Services.UserService
 {
@@ -12,6 +13,19 @@ namespace GameFinder.Services.UserService
         {
             _dbContext = dbContext;
         }
+
+        // public async Task<User> UpdateUserAsync(int userId, JsonPatchDocument userDocument)
+        // {
+        //     var userQuery = await GetUserByIdAsync(userId);
+        //     if (userQuery == null)
+        //     {
+        //         return userQuery;
+        //     }
+        //     userDocument.ApplyTo(userQuery);
+        //     await _dbContext.SaveChangesAsync();
+
+        //     return userQuery;
+        // }
 
         public async Task<bool> RegisterUserAsync(User model)
         {
