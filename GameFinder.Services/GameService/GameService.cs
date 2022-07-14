@@ -18,7 +18,11 @@ namespace GameFinder.Services.GameService
             var gameEntity = new Game
             {
                 Id = request.Id,
-                Title = request.Title
+                Title = request.Title,
+                GenreId = request.GenreId,
+                Genre = request.Genre,
+                GameConsoleId = request.GameConsoleId,
+                GameConsole = request.GameConsole
             };
 
             _dbContext.Games.Add(gameEntity);

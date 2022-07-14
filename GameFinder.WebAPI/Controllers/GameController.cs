@@ -1,6 +1,7 @@
 using GameFinder.Services.GameService;
 using Microsoft.AspNetCore.Mvc;
 using GameFinder.Data;
+using GameFinder.Data.Models;
 
 namespace GameFinder.WebAPI.Controllers
 {
@@ -17,15 +18,24 @@ namespace GameFinder.WebAPI.Controllers
             _dbContext = dbContext;
         }
 
-        // [HttpPost]
-        // public async Task<IActionResult> CreateGameAsync() {
-        //     throw new NotImplementedException();
-        // }
+        [HttpPost]
+        public async Task<IActionResult> CreateGameAsync([FromBody] Game model) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+            var createGame = await _service.CreateGameAsync(model);
+            if (createGame) {
+                return Ok("Game was created.");
+            }
+            return BadRequest("Game could not be created, sorry.");
+        }
 
-        // [HttpGet]
-        // public async Task<IActionResult> GetAllGameAsync() {
-        //     throw new NotImplementedException();
-        // }
+        [HttpGet]
+        public async Task<IEnumerable<Game>> GetAllGameAsync() {
+            var games = await _service.GetAllGamesAsync();
+
+            return games;
+        }
 
         [HttpPut("{gameId:int}")]
         public async Task<IActionResult> PatchGameAsync([FromRoute] int id) {
@@ -37,7 +47,7 @@ namespace GameFinder.WebAPI.Controllers
             return Ok(updatedGame);
         }
 
-        [HttpDelete]
+        [HttpDelete("{gameId:int}")]
         public async Task<IActionResult> DeleteGameAsync(int Id) {
             var gameToDelete = await _service.DeleteGameAsync(Id);
             if (gameToDelete is false) {
