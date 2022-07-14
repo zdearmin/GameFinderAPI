@@ -25,7 +25,12 @@ namespace GameFinder.WebAPI.Controllers
 
         // TODO Finish Patch to update Game
         [HttpPatch]
-        public async Task<IActionResult> UpdateGameAsync() {
+        public async Task<IActionResult> PatchGame([FromRoute] int Id, [FromBody] JsonPatchDocument gameDocument) {
+            var updatedGame = await _service.UpdateGamePatchAsync(Id, gameDocument);
+            if (updatedGame is null) {
+                return NotFound();
+            }
+            return Ok(updatedGame);
         }
 
         [HttpDelete]

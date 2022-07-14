@@ -39,9 +39,14 @@ namespace GameFinder.WebAPI.Controllers
             return Ok(userDetail);
         }
 
-        // TODO Finish Patch to update User
-        [HttpPatch("Update")]
-        public async Task<IActionResult> UpdateUserAsync() {
+        // TODO Finish Patch to update User 
+        [HttpPatch("{userId:int}")]
+        public async Task<IActionResult> PatchUser([FromRoute] int userId, [FromBody] JsonPatchDocument userDocument) {
+            var updatedUser = await _service.UpdateUserPatchAsync(userId, userDocument);
+            if (updatedUser is null) {
+                return NotFound();
+            }
+            return Ok(updatedUser);
         }
 
         [HttpDelete("{userId:int}")]
