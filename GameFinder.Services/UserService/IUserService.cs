@@ -1,4 +1,5 @@
 using GameFinder.Data;
+using GameFinder.Data.Models;
 
 namespace GameFinder.Services.UserService
 {
