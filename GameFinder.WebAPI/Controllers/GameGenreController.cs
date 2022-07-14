@@ -23,7 +23,12 @@ namespace GameFinder.WebAPI.Controllers
 
         // TODO Finish Patch to update GameGenre
         [HttpPatch]
-        public async Task<IActionResult> UpdateGameGenreAsync() {
+        public async Task<IActionResult> PatchGameGenre([FromRoute] int Id, [FromBody] JsonPatchDocument gameGenreDocument) {
+            var updatedGameGenre = await _service.UpdateGameGenrePatchAsync(Id, gameGenreDocument);
+            if (updatedGameGenre is null) {
+                return NotFound();
+            }
+            return Ok(updatedGameGenre);
         }
 
         [HttpDelete("{Id:int}")]
