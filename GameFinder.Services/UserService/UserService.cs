@@ -1,15 +1,15 @@
-using System.Security.Cryptography.X509Certificates;
 using GameFinder.Data;
-using GameFinder.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
-namespace GameFinder.Services.User
+namespace GameFinder.Services.UserService
 {
     public class UserService : IUserService
     {
         private readonly AppDbContext _dbContext;
         public UserService (AppDbContext dbContext)
         {
-            _dbConext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<bool> RegisterUserAsync(User model)
@@ -69,7 +69,7 @@ namespace GameFinder.Services.User
 
         public async Task<bool> UpdateUserAsync(User request)
         {
-            
+
         }
 
         public async Task<bool> DeleteUserAsync(int userId)

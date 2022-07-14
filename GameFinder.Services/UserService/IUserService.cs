@@ -1,4 +1,6 @@
-namespace GameFinder.Services.User
+using GameFinder.Data;
+
+namespace GameFinder.Services.UserService
 {
     public interface IUserService
     {
