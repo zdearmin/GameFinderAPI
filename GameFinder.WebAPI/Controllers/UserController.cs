@@ -1,8 +1,8 @@
 // TODO Add/Update using statements
 using Microsoft.AspNetCore.Mvc;
 using GameFinder.Services.User;
-using GameFinder.Models;
-using GameFinder.Models.User;
+using GameFinder.Data.Models;
+using GameFinder.Data.Models.User;
 
 
 namespace GameFinder.WebAPI.Controllers
@@ -44,9 +44,13 @@ namespace GameFinder.WebAPI.Controllers
         public async Task<IActionResult> UpdateUserAsync() {
         }
 
-        // TODO Finish Delete to Delete User
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUserAsync() {
+        [HttpDelete("{userId:int}")]
+        public async Task<IActionResult> DeleteUserAsync(int userId) {
+            var userToDelete = await _service.GetUserByIdAsync(userId);
+            if (userToDelete is null) {
+                return NotFound();
+            }
+            return Ok(userToDelete);
         }
         
     }

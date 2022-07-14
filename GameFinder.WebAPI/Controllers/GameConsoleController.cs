@@ -4,6 +4,11 @@ namespace GameFinder.WebAPI.Controllers
 {
     public class GameConsoleController : ControllerBase
     {
+        private readonly IGameConsoleService _service;
+        
+        public GameConsoleController(IGameConsoleService service) {
+            _service = service;
+        }
         [HttpPost]
         public async Task<IActionResult> CreateGameConsoleAsync() {
             throw new NotImplementedException();
@@ -19,9 +24,13 @@ namespace GameFinder.WebAPI.Controllers
         public async Task<IActionResult> UpdateGameConsoleAsync() {
         }
 
-        // TODO Finish Delete to Delete Console
         [HttpDelete]
-        public async Task<IActionResult> DeleteGameConsoleAsync() {
+        public async Task<IActionResult> DeleteGameConsoleAsync(int Id) {
+            var gameConsoleToDelete = await _service.GetGameConsoleByIdAsync(Id);
+            if (gameConsoleToDelete is null) {
+                return NotFound();
+            }
+            return Ok(gameConsoleToDelete);
         }
 
     }
