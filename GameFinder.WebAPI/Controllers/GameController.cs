@@ -1,3 +1,4 @@
+using GameFinder.Services.GameService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameFinder.WebAPI.Controllers
@@ -26,7 +27,7 @@ namespace GameFinder.WebAPI.Controllers
         // TODO Finish Patch to update Game
         [HttpPatch]
         public async Task<IActionResult> PatchGame([FromRoute] int Id, [FromBody] JsonPatchDocument gameDocument) {
-            var updatedGame = await _service.UpdateGamePatchAsync(Id, gameDocument);
+            var updatedGame = await _service.UpdateGameAsync(Id, gameDocument);
             if (updatedGame is null) {
                 return NotFound();
             }
@@ -35,8 +36,8 @@ namespace GameFinder.WebAPI.Controllers
 
         [HttpDelete]
         public async Task<IActionResult> DeleteGameAsync(int Id) {
-            var gameToDelete = await _service.GetGameByIdAsync(Id);
-            if (gameToDelete is null) {
+            var gameToDelete = await _service.DeleteGameAsync(Id);
+            if (gameToDelete is false) {
                 return NotFound();
             }
             return Ok(gameToDelete);
