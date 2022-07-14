@@ -52,6 +52,5 @@ namespace GameFinder.WebAPI.Controllers
             }
             return Ok(userToDelete);
         }
-        
     }
 }
