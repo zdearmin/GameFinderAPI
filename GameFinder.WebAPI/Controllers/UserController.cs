@@ -48,6 +48,5 @@ namespace GameFinder.WebAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteUserAsync() {
         }
-        
     }
 }
