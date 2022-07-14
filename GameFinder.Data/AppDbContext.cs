@@ -10,5 +10,6 @@ namespace GameFinder.Data
         public DbSet<Game> Games { get; set; }
         public DbSet<GameConsole> GameConsoles { get; set; }
         public DbSet<GameGenre> GameGenres { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
