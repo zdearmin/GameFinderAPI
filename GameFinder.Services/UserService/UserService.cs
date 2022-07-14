@@ -54,7 +54,7 @@ namespace GameFinder.Services.UserService
             return userDetail;
         }
 
-        private async Task<UserDetail> GetUserByUsernameAsync(string username)
+        private  async Task<UserDetail> GetUserByUsernameAsync(string username)
         {
             var entity = await _dbContext.Users.FindAsync(username);
             if (entity is null)
