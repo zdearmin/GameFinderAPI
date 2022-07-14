@@ -1,3 +1,4 @@
+using GameFinder.Services.GameConsoleService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameFinder.WebAPI.Controllers
@@ -22,7 +23,7 @@ namespace GameFinder.WebAPI.Controllers
         // TODO Finish Patch to update Console
         [HttpPatch]
         public async Task<IActionResult> PatchGameConsole([FromRoute] int Id, [FromBody] JsonPatchDocument gameConsoleDocument) {
-            var updatedGameConsole = await _service.UpdateGameConsolePatchAsync(Id, gameConsoleDocument);
+            var updatedGameConsole = await _service.UpdateGameConsoleAsync(Id, gameConsoleDocument);
             if (updatedGameConsole is null) {
                 return NotFound();
             }
@@ -31,8 +32,8 @@ namespace GameFinder.WebAPI.Controllers
 
         [HttpDelete]
         public async Task<IActionResult> DeleteGameConsoleAsync(int Id) {
-            var gameConsoleToDelete = await _service.GetGameConsoleByIdAsync(Id);
-            if (gameConsoleToDelete is null) {
+            var gameConsoleToDelete = await _service.DeleteGameConsoleAsync(Id);
+            if (gameConsoleToDelete is false) {
                 return NotFound();
             }
             return Ok(gameConsoleToDelete);
