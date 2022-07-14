@@ -15,7 +15,6 @@ namespace GameFinder.Services.GameConsoleService
         {
             var gameConsoleEntity = new GameConsole
             {
-                Id = request.Id,
                 Title = request.Title
             };
 
