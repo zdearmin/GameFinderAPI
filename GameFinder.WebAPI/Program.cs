@@ -21,7 +21,6 @@ builder.Services.AddScoped<ITitle, Title>();
 builder.Services.AddScoped<IGenre, Genre>();
 builder.Services.AddScoped<IConsole, GameConsole>();
 
-
 // Add services to the container.
 builder.Services.AddControllers();
 // More about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
