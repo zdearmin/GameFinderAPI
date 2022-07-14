@@ -1,15 +1,35 @@
+// TODO Add using statements
+using Microsoft.EntityFrameworkCore;
+using GameFinder.Data;
+using GameFinder.Services.Console;
+using GameFinder.Services.Genre;
+using GameFinder.Services.Title;
+using GameFinder.Services.User;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Different connection strings for each member
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionNick");
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionZach");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionMary");
 
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+// TODO Add Services for Dependency Injection
+builder.Services.AddScoped<IUser, User>();
+builder.Services.AddScoped<ITitle, Title>();
+builder.Services.AddScoped<IGenre, Genre>();
+builder.Services.AddScoped<IConsole, GameConsole>();
+
+
+// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// More about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
