@@ -1,4 +1,5 @@
 using GameFinder.Data;
+using GameFinder.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
@@ -23,7 +24,6 @@ namespace GameFinder.Services.UserService
             {
                 Email = model.Email,
                 Username = model.Username,
-                DateCreated = DateTime.Now
             };
 
             var passwordHasher = new PasswordHasher<User>();
@@ -49,9 +49,6 @@ namespace GameFinder.Services.UserService
                 Id = entity.Id,
                 Email = entity.Email,
                 Username = entity.Username,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                DateCreated = entity.DateCreated
             };
 
             return userDetail;
@@ -59,22 +56,62 @@ namespace GameFinder.Services.UserService
 
         private async Task<UserDetail> GetUserByUsernameAsync(string username)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Username.ToLower() == username.ToLower());
+            var entity = await _dbContext.Users.FindAsync(username);
+            if (entity is null)
+            {
+                return null;
+            }
+            
+            var userDetail = new UserDetail
+            {
+                Id = entity.Id,
+                Email = entity.Email,
+                Username = entity.Username,
+            };
+
+            return userDetail;
         }
 
         private async Task<UserDetail> GetUserByEmailAsync(string email)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Email.ToLower() == email.ToLower());
+            var entity = await _dbContext.Users.FindAsync(email);
+            if (entity is null)
+            {
+                return null;
+            }
+            
+            var userDetail = new UserDetail
+            {
+                Id = entity.Id,
+                Email = entity.Email,
+                Username = entity.Username,
+            };
+
+            return userDetail;
         }
 
         public async Task<bool> UpdateUserAsync(User request)
         {
+            var userEntity = await _dbContext.Users.FindAsync(request.Id);
 
+            userEntity.Email = request.Email;
+            userEntity.Username = request.Username;
+            userEntity.Password = request.Password;
+            userEntity.FirstName = request.FirstName;
+            userEntity.LastName = request.LastName;
+
+            var numberOfChanges = await _dbContext.SaveChangesAsync();
+
+            return numberOfChanges == 1;
         }
 
         public async Task<bool> DeleteUserAsync(int userId)
         {
-            
+            var userEntity = await _dbContext.Users.FindAsync(userId);
+
+            _dbContext.Users.Remove(userEntity);
+
+            return await _dbContext.SaveChangesAsync() == 1;
         }
     }
 }
