@@ -12,7 +12,6 @@ namespace GameFinder.WebAPI.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        // TODO Check User Service for correct name once created
         private readonly IUserService _service;
         private readonly AppDbContext _dbContext;
 
@@ -22,7 +21,7 @@ namespace GameFinder.WebAPI.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser([FromBody] User model) {
+        public async Task<IActionResult> RegisterUserAsync([FromBody] User model) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
@@ -34,7 +33,7 @@ namespace GameFinder.WebAPI.Controllers
         }
 
         [HttpGet("{userId:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int userId) {
+        public async Task<IActionResult> GetByIdAsync([FromRoute] int userId) {
             var userDetail = await _service.GetUserByIdAsync(userId);
             if (userDetail is null) {
                 return NotFound();
@@ -42,9 +41,8 @@ namespace GameFinder.WebAPI.Controllers
             return Ok(userDetail);
         }
 
-        // TODO Finish Put to update User 
         [HttpPut("{userId:int}")]
-        public async Task<IActionResult> PatchUser([FromRoute] int id)
+        public async Task<IActionResult> PutUserAsync([FromRoute] int id)
         // [FromBody] JsonPatchDocument userDocument
         {
             var requestUser = await _dbContext.Users.FindAsync(id);

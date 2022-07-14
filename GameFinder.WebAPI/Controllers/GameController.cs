@@ -1,5 +1,6 @@
 using GameFinder.Services.GameService;
 using Microsoft.AspNetCore.Mvc;
+using GameFinder.Data;
 
 namespace GameFinder.WebAPI.Controllers
 {
@@ -9,26 +10,28 @@ namespace GameFinder.WebAPI.Controllers
     {
 
         private readonly IGameService _service;
-        
-        public GameController(IGameService service) {
+        private readonly AppDbContext _dbContext;
+
+        public GameController(IGameService service, AppDbContext dbContext) {
             _service = service;
+            _dbContext = dbContext;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateGameAsync() {
-            throw new NotImplementedException();
-        }
+        // [HttpPost]
+        // public async Task<IActionResult> CreateGameAsync() {
+        //     throw new NotImplementedException();
+        // }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllGameAsync() {
-            throw new NotImplementedException();
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> GetAllGameAsync() {
+        //     throw new NotImplementedException();
+        // }
 
-        // TODO Finish Patch to update Game
-        [HttpPatch]
-        public async Task<IActionResult> PatchGame([FromRoute] int Id, [FromBody] JsonPatchDocument gameDocument) {
-            var updatedGame = await _service.UpdateGameAsync(Id, gameDocument);
-            if (updatedGame is null) {
+        [HttpPut("{gameId:int}")]
+        public async Task<IActionResult> PatchGameAsync([FromRoute] int id) {
+            var requestGame = await _dbContext.Games.FindAsync(id);
+            var updatedGame = await _service.UpdateGameAsync(requestGame);
+            if (updatedGame is false) {
                 return NotFound();
             }
             return Ok(updatedGame);

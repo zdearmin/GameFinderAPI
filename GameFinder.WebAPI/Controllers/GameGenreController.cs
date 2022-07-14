@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using GameFinder.Services.GameGenreService;
+using GameFinder.Data;
 
 namespace GameFinder.WebAPI.Controllers
 {
@@ -7,32 +8,34 @@ namespace GameFinder.WebAPI.Controllers
     {
 
         private readonly IGameGenreService _service;
-        
-        public GameGenreController(IGameGenreService service) {
+        private readonly AppDbContext _dbContext;
+
+        public GameGenreController(IGameGenreService service, AppDbContext dbContext) {
             _service = service;
+            _dbContext = dbContext;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateGameGenreAsync() {
-            throw new NotImplementedException();
-        }
+        // [HttpPost]
+        // public async Task<IActionResult> CreateGameGenreAsync() {
+        //     throw new NotImplementedException();
+        // }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllGameGenreAsync() {
-            throw new NotImplementedException();
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> GetAllGameGenreAsync() {
+        //     throw new NotImplementedException();
+        // }
 
-        // TODO Finish Patch to update GameGenre
-        [HttpPatch]
-        public async Task<IActionResult> PatchGameGenre([FromRoute] int Id, [FromBody] JsonPatchDocument gameGenreDocument) {
-            var updatedGameGenre = await _service.UpdateGenreAsync(Id, gameGenreDocument);
-            if (updatedGameGenre is null) {
+        [HttpPut("{gameGenreId:int}")]
+        public async Task<IActionResult> PatchGameGenreAsync([FromRoute] int id) {
+            var requestGameGenre = await _dbContext.GameGenres.FindAsync(id);
+            var updatedGameGenre = await _service.UpdateGenreAsync(requestGameGenre);
+            if (updatedGameGenre is false) {
                 return NotFound();
             }
             return Ok(updatedGameGenre);
         }
 
-        [HttpDelete("{Id:int}")]
+        [HttpDelete("{gameGenreId:int}")]
         public async Task<IActionResult> DeleteGameGenreAsync(int Id) {
             var gameGenreToDelete = await _service.GetAllGenresAsync();
             if (gameGenreToDelete is null) {

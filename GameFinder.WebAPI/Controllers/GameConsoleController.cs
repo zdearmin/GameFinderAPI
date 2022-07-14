@@ -1,36 +1,39 @@
 using GameFinder.Services.GameConsoleService;
 using Microsoft.AspNetCore.Mvc;
+using GameFinder.Data;
 
 namespace GameFinder.WebAPI.Controllers
 {
     public class GameConsoleController : ControllerBase
     {
         private readonly IGameConsoleService _service;
-        
-        public GameConsoleController(IGameConsoleService service) {
+        private readonly AppDbContext _dbContext;
+
+        public GameConsoleController(IGameConsoleService service, AppDbContext dbContext) {
             _service = service;
+            _dbContext = dbContext;
         }
-        [HttpPost]
-        public async Task<IActionResult> CreateGameConsoleAsync() {
-            throw new NotImplementedException();
-        }
+        // [HttpPost]
+        // public async Task<IActionResult> CreateGameConsoleAsync() {
+        //     throw new NotImplementedException();
+        // }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllGameConsoleAsync() {
-            throw new NotImplementedException();
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> GetAllGameConsoleAsync() {
+        //     throw new NotImplementedException();
+        // }
 
-        // TODO Finish Patch to update Console
-        [HttpPatch]
-        public async Task<IActionResult> PatchGameConsole([FromRoute] int Id, [FromBody] JsonPatchDocument gameConsoleDocument) {
-            var updatedGameConsole = await _service.UpdateGameConsoleAsync(Id, gameConsoleDocument);
-            if (updatedGameConsole is null) {
+        [HttpPut("{consoleId:int}")]
+        public async Task<IActionResult> PatchGameConsoleAsync([FromRoute] int id) {
+            var requestConsole = await _dbContext.GameConsoles.FindAsync(id);
+            var updatedGameConsole = await _service.UpdateGameConsoleAsync(requestConsole);
+            if (updatedGameConsole is false) {
                 return NotFound();
             }
             return Ok(updatedGameConsole);
         }
 
-        [HttpDelete]
+        [HttpDelete("{consoleId:int}")]
         public async Task<IActionResult> DeleteGameConsoleAsync(int Id) {
             var gameConsoleToDelete = await _service.DeleteGameConsoleAsync(Id);
             if (gameConsoleToDelete is false) {
