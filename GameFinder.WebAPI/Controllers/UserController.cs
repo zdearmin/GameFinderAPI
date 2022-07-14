@@ -33,6 +33,7 @@ namespace GameFinder.WebAPI.Controllers
         }
 
         [HttpGet("{userId:int}")]
+        [ProducesResponseType(typeof(UserDetail), 200)]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int userId) {
             var userDetail = await _service.GetUserByIdAsync(userId);
             if (userDetail is null) {

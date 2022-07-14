@@ -10,8 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Different connection strings for each member
 // var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionNick");
-// var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionZach");
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionMary");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionZach");
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionMary");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 

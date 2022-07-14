@@ -4,6 +4,8 @@ using GameFinder.Data;
 
 namespace GameFinder.WebAPI.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class GameGenreController : ControllerBase
     {
 

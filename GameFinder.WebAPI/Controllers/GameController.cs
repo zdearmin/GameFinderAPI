@@ -5,7 +5,7 @@ using GameFinder.Data;
 namespace GameFinder.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller")]
+    [Route("api/[controller]")]
     public class GameController : ControllerBase
     {
 
