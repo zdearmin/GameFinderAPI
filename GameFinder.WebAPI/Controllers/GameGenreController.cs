@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GameFinder.Services.GameGenreService;
 using GameFinder.Data;
+using GameFinder.Data.Models;
 
 namespace GameFinder.WebAPI.Controllers
 {
@@ -17,15 +18,24 @@ namespace GameFinder.WebAPI.Controllers
             _dbContext = dbContext;
         }
 
-        // [HttpPost]
-        // public async Task<IActionResult> CreateGameGenreAsync() {
-        //     throw new NotImplementedException();
-        // }
+        [HttpPost]
+        public async Task<IActionResult> CreateGameGenreAsync([FromBody] GameGenre model) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+            var createGenre = await _service.CreateGenreAsync(model);
+            if (createGenre) {
+                return Ok("Genre was created.");
+            }
+            return BadRequest("Genre could not be created, sorry.");
+        }
 
-        // [HttpGet]
-        // public async Task<IActionResult> GetAllGameGenreAsync() {
-        //     throw new NotImplementedException();
-        // }
+        [HttpGet]
+        public async Task<IEnumerable<GameGenre>> GetAllGameGenreAsync() {
+            var gameGenres = await _service.GetAllGenresAsync();
+
+            return gameGenres;
+        }
 
         [HttpPut("{gameGenreId:int}")]
         public async Task<IActionResult> PatchGameGenreAsync([FromRoute] int id) {

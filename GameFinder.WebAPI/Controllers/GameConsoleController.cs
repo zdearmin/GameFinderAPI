@@ -1,6 +1,7 @@
 using GameFinder.Services.GameConsoleService;
 using Microsoft.AspNetCore.Mvc;
 using GameFinder.Data;
+using GameFinder.Data.Models;
 
 namespace GameFinder.WebAPI.Controllers
 {
@@ -15,15 +16,25 @@ namespace GameFinder.WebAPI.Controllers
             _service = service;
             _dbContext = dbContext;
         }
-        // [HttpPost]
-        // public async Task<IActionResult> CreateGameConsoleAsync() {
-        //     throw new NotImplementedException();
-        // }
 
-        // [HttpGet]
-        // public async Task<IActionResult> GetAllGameConsoleAsync() {
-        //     throw new NotImplementedException();
-        // }
+        [HttpPost]
+        public async Task<IActionResult> CreateGameConsoleAsync([FromBody] GameConsole model) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+            var createGameConsole = await _service.CreateGameConsoleAsync(model);
+            if (createGameConsole) {
+                return Ok("Game Console was created.");
+            }
+            return BadRequest("Game Console could not be created, sorry.");
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<GameConsole>> GetAllGameConsoleAsync() {
+            var gameConsoles = await _service.GetAllGameConsolesAsync();
+
+            return gameConsoles;
+        }
 
         [HttpPut("{consoleId:int}")]
         public async Task<IActionResult> PatchGameConsoleAsync([FromRoute] int id) {

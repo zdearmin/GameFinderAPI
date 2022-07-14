@@ -11,8 +11,6 @@ namespace GameFinder.Services.GameConsoleService
         {
             _dbContext = dbContext;
         }
-
-        // TODO Add authorization for admins only for this method
         public async Task<bool> CreateGameConsoleAsync(GameConsole request)
         {
             var gameConsoleEntity = new GameConsole
